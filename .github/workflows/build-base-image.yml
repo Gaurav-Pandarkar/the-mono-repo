@@ -66,3 +66,4 @@ jobs:
       run: docker push ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest 
       
       
+      
