@@ -1,0 +1,68 @@
+name: Base Image Building Workflow
+
+on:
+  push:
+    paths:
+      - dev-sec-ops/base-images/**
+
+
+jobs:
+  build-base-image-license-finder:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Build Image license-finder
+      run: docker build -t ${{vars.DOCKER_REGISTRY_USER}}/license-finder:latest -f dev-sec-ops/base-images/license-finder .
+
+    - name: Login to Github Docker registery
+      uses: docker/login-action@v2
+      with:
+        username: ${{vars.DOCKER_REGISTRY_USER}} 
+        password: ${{secrets.DOCKER_REGISTRY_PAT}}
+
+    - name: Push Docker Image
+      run: docker push ${{vars.DOCKER_REGISTRY_USER}}/license-finder:latest 
+
+
+  build-base-image-openjdk24-slim:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Build Image open-jdk-24-slim
+      run: docker build -t ${{vars.DOCKER_REGISTRY_USER}}/open-jdk-24-slim:latest -f dev-sec-ops/base-images/open-jdk-24-slim .
+
+    - name: Login to Github Docker registery
+      uses: docker/login-action@v2
+      with:
+        username: ${{vars.DOCKER_REGISTRY_USER}} 
+        password: ${{secrets.DOCKER_REGISTRY_PAT}}
+
+    - name: Push Docker Image
+      run: docker push ${{vars.DOCKER_REGISTRY_USER}}/open-jdk-24-slim:latest 
+
+  build-base-image-gitleaks:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Build Image gitleaks
+      run: docker build -t ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest -f dev-sec-ops/base-images/gitleaks .
+
+    - name: Login to Github Docker registery
+      uses: docker/login-action@v2
+      with:
+        username: ${{vars.DOCKER_REGISTRY_USER}} 
+        password: ${{secrets.DOCKER_REGISTRY_PAT}}
+
+    - name: Push Docker Image
+      run: docker push ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest 
+      
+      
