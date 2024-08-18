@@ -1,4 +1,4 @@
-name: Base Image Building Workflow
+name: Base Image Building Workflow for hospital management system
 
 on:
   push:
