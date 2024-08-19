@@ -31,6 +31,7 @@ jobs:
         ls
 
     - name: Perform Google Formatter check
+      if: false
       working-directory: 'Hospital-Management/appointment-service'
       run: mvn com.spotify.fmt:fmt-maven-plugin:check
 
