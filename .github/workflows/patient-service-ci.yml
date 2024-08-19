@@ -3,7 +3,7 @@ name: CI/CD Workflow For patient service
 on:
   push:
     paths:
-      - Hospital-Management/patient-service
+      - Hospital-Management/patient-service/**
 
 jobs:
   pre-commit-scans:
