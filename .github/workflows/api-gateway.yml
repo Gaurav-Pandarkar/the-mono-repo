@@ -2,13 +2,8 @@ name: CI/CD Workflow For Api-gateway
 
 on:
   push:
-    branches:
-      - '**'
-    tags:
-      - '**'
-  pull_request:
-    branches:
-      - main
+    paths:
+      - Hospital-Management/api-gateway
 
 jobs:
   pre-commit-scans:
