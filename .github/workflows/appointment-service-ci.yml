@@ -2,13 +2,8 @@ name: CI/CD Workflow For appointment service
 
 on:
   push:
-    branches:
-      - '**'
-    tags:
-      - '**'
-  pull_request:
-    branches:
-      - main
+    paths:
+      - Hospital-Management/appointment-service
 
 jobs:
   pre-commit-scans:
