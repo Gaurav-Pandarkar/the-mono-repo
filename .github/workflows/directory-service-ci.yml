@@ -2,13 +2,9 @@ name: CI/CD Workflow For directory service
 
 on:
   push:
-    branches:
-      - '**'
-    tags:
-      - '**'
-  pull_request:
-    branches:
-      - main
+    paths:
+      - Hospital-Management/directory-service
+
 
 jobs:
   pre-commit-scans:
