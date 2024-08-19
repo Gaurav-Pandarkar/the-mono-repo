@@ -58,3 +58,4 @@ jobs:
       run: |
         CURRENT_FOLDER_NAME=patient-service
         docker push ${{vars.DOCKER_REGISTRY_USER}}/$CURRENT_FOLDER_NAME:latest
+        
