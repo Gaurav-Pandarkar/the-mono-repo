@@ -1,4 +1,4 @@
-FROM devopsdynamo17/open-jdk-24-slim
+FROM gauravpandarkar2003/open-jdk-24-slim
 
 WORKDIR /app
 
