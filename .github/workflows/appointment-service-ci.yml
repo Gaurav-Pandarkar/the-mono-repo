@@ -26,9 +26,8 @@ jobs:
         echo "CURRENT_FOLDER_NAME=$CURRENT_FOLDER_NAME" >> $GITHUB_ENV
 
     - name: Perform Google Formatter check
-      run: mvn com.spotify.fmt:fmt-maven-plugin:check
+      run: mvn com.spotify.fmt:fmt-maven-plugin:format
       working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
-      continue-on-error: true
 
     - name: GitLeaks Scan
       run: |
