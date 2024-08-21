@@ -32,7 +32,7 @@ jobs:
     - name: GitLeaks Scan
       run: |
           docker pull ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest
-          docker run --rm -v $(pwd):/path ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest --path=/path
+          docker run --rm -v $(pwd):/path ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest --path=/path detect -v
 
     - name: OSS Scan
       working-directory: 'Hospital-Management/api-gateway'
