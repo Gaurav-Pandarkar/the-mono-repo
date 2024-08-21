@@ -33,8 +33,12 @@ jobs:
       run: |
         docker pull ${{ vars.DOCKER_REGISTRY_USER }}/gitleaks:latest
         docker run --rm -v $(pwd):/path ${{ vars.DOCKER_REGISTRY_USER }}/gitleaks:latest detect -v
-      working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
 
+    - name: license finder Scan
+      run: |
+        docker pull ${{ vars.DOCKER_REGISTRY_USER }}/license-finder:latest
+        docker run --rm -v $(pwd):/scan ${{ vars.DOCKER_REGISTRY_USER }}/license-finder:latest
+        
     - name: OSS Scan
       run: mvn ossindex:audit
       working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
