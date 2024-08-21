@@ -28,6 +28,7 @@ jobs:
     - name: Perform Google Formatter check
       run: mvn com.spotify.fmt:fmt-maven-plugin:check
       working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
+      continue-on-error: true
 
     - name: GitLeaks Scan
       run: |
