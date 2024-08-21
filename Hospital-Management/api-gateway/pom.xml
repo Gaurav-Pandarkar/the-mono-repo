@@ -11,6 +11,7 @@
 		<image.registry>dnyanyog.org</image.registry>
 		<image.tag>latest</image.tag>
 	</properties>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -26,7 +27,6 @@
 	</dependencies>
 
 	<build>
-		
 		<plugins>
 		<plugin>
     <groupId>org.sonarsource.scanner.maven</groupId>
