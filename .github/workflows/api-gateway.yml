@@ -31,8 +31,8 @@ jobs:
 
     - name: GitLeaks Scan
       run: |
-          docker pull ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:$GITHUB_REF_NAME
-          docker run --rm -v $(pwd):/path ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:$GITHUB_REF_NAME --path=/path
+          docker pull ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest
+          docker run --rm -v $(pwd):/path ${{vars.DOCKER_REGISTRY_USER}}/gitleaks:latest --path=/path
 
     - name: OSS Scan
       working-directory: 'Hospital-Management/api-gateway'
