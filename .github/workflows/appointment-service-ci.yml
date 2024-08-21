@@ -3,7 +3,7 @@ name: CI/CD Workflow For appointment service
 on:
   push:
     paths:
-      - Hospital-Management/appointment service/**
+      - Hospital-Management/appointment-service/**
 
 jobs:
   pre-commit-scans:
