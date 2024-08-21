@@ -3,7 +3,7 @@ name: CI/CD Workflow For appointment service
 on:
   push:
     paths:
-      - Hospital-Management/appointment-service/**
+      - Hospital-Management/appointment service/**
 
 jobs:
   pre-commit-scans:
@@ -19,43 +19,46 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Navigate to subfolder and run commands
-      working-directory: 'Hospital-Management/appointment-service'
+    - name: Set Current Folder Name
       run: |
-        echo "Current directory: $(pwd)"
-        ls
+        CURRENT_FOLDER_NAME=$(basename $(pwd)/Hospital-Management/appointment service)
+        echo "Current folder name: $CURRENT_FOLDER_NAME"
+        echo "CURRENT_FOLDER_NAME=$CURRENT_FOLDER_NAME" >> $GITHUB_ENV
 
     - name: Perform Google Formatter check
-      if: false
-      working-directory: 'Hospital-Management/appointment-service'
       run: mvn com.spotify.fmt:fmt-maven-plugin:check
+      working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
 
     - name: GitLeaks Scan
-      uses: zricethezav/gitleaks-action@v1.3.0
-      with:
-        args: --path=Hospital-Management/appointment-service
+      run: |
+        docker pull ${{ vars.DOCKER_REGISTRY_USER }}/gitleaks:latest
+        docker run --rm -v $(pwd):/path ${{ vars.DOCKER_REGISTRY_USER }}/gitleaks:latest detect -v
 
+    - name: license finder Scan
+      run: |
+        docker pull ${{ vars.DOCKER_REGISTRY_USER }}/license-finder:latest
+        docker run --rm -v $(pwd):/scan ${{ vars.DOCKER_REGISTRY_USER }}/license-finder:latest
+        
     - name: OSS Scan
-      working-directory: 'Hospital-Management/appointment-service'
       run: mvn ossindex:audit
+      working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
       continue-on-error: true
 
     - name: OWASP Scan
       if: false
-      working-directory: 'Hospital-Management/appointment-service'
       run: mvn org.owasp:dependency-check-maven:check
+      working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
 
     - name: Build code and create Docker images
-      working-directory: 'Hospital-Management/appointment-service'
-      run: mvn clean install docker:build -Dimage.registry=${{vars.DOCKER_REGISTRY_USER}} -Dimage.tag=$GITHUB_REF_NAME
+      run: mvn clean install docker:build -Dimage.registry=${{ vars.DOCKER_REGISTRY_USER }} -Dimage.tag=$GITHUB_REF_NAME
+      working-directory: Hospital-Management/${{ env.CURRENT_FOLDER_NAME }}
 
     - name: Log in to GitHub Docker Registry
       uses: docker/login-action@v2
       with:
-        username: ${{vars.DOCKER_REGISTRY_USER}}
-        password: ${{secrets.DOCKER_REGISTRY_PAT}}
+        username: ${{ vars.DOCKER_REGISTRY_USER }}
+        password: ${{ secrets.DOCKER_REGISTRY_PAT }}
 
     - name: Push Docker images
       run: |
-        CURRENT_FOLDER_NAME=appointment-service
-        docker push ${{vars.DOCKER_REGISTRY_USER}}/$CURRENT_FOLDER_NAME:$GITHUB_REF_NAME
+        docker push ${{ vars.DOCKER_REGISTRY_USER }}/$CURRENT_FOLDER_NAME:$GITHUB_REF_NAME
